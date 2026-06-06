@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LIPP VPN - кабинет</title>
+    <link rel="icon" href="/static/assets/lipp-logo.png" />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <main id="auth-view" class="auth-shell">
+      <section class="auth-panel">
+        <div class="brand-lockup auth-brand">
+          <img src="/static/assets/lipp-logo.png" alt="LIPP VPN" />
+          <div>
+            <strong>LIPP VPN</strong>
+            <span>личный кабинет</span>
+          </div>
+        </div>
+
+        <div class="auth-copy">
+          <h1>Доступ к VPN без Telegram</h1>
+          <p>
+            Войдите в кабинет, оплатите тариф и получите VLESS-ссылку или ссылку подписки прямо на сайте.
+          </p>
+        </div>
+
+        <div class="auth-switch" role="tablist" aria-label="Режим входа">
+          <button class="is-active" id="login-tab" type="button">Вход</button>
+          <button id="register-tab" type="button">Регистрация</button>
+        </div>
+
+        <form id="auth-form" class="auth-form">
+          <label id="name-field" class="field is-hidden">
+            <span>Имя</span>
+            <input id="auth-name" autocomplete="name" placeholder="Как к вам обращаться" />
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input id="auth-email" type="email" autocomplete="email" placeholder="you@example.com" required />
+          </label>
+          <label class="field">
+            <span>Пароль</span>
+            <input id="auth-password" type="password" autocomplete="current-password" placeholder="Минимум 8 символов" required />
+          </label>
+          <input id="referral-input" type="hidden" />
+          <button id="auth-submit" class="primary-button" type="submit">
+            <span>Войти</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+        </form>
+      </section>
+
+      <section class="auth-preview" aria-label="Возможности кабинета">
+        <div class="preview-topline">
+          <span>Кабинет LIPP</span>
+          <strong id="preview-price">от 90 ₽</strong>
+        </div>
+        <div class="preview-status">
+          <span>Подписка</span>
+          <strong>активна</strong>
+          <small>ключ выдается автоматически после оплаты</small>
+        </div>
+        <div class="preview-link">
+          <span>vless://user...#LIPP-VPN</span>
+          <button type="button" aria-label="Скопировать пример">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 8h10v10H8z" />
+              <path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+          </button>
+        </div>
+        <div class="preview-steps">
+          <span>1. Оплата</span>
+          <span>2. Ключ</span>
+          <span>3. Подключение</span>
+        </div>
+      </section>
+    </main>
+
+    <main id="app-view" class="app-shell is-hidden">
+      <aside class="sidebar">
+        <div class="brand-lockup">
+          <img src="/static/assets/lipp-logo.png" alt="LIPP VPN" />
+          <div>
+            <strong>LIPP VPN</strong>
+            <span>secure access</span>
+          </div>
+        </div>
+        <nav class="nav-list" aria-label="Навигация">
+          <a class="is-active" href="#access">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 5 3.5 8.5 7 10 3.5-1.5 7-5 7-10V6z" /></svg>
+            Доступ
+          </a>
+          <a href="#tariffs">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z" /><path d="M16 3v4M8 3v4M2 11h20" /></svg>
+            Тарифы
+          </a>
+          <a href="#payments">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" /></svg>
+            История оплат
+          </a>
+          <a href="#support">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" /></svg>
+            Поддержка
+          </a>
+        </nav>
+        <button id="logout-button" class="ghost-button" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5" /><path d="M15 12H3" /><path d="M21 3v18" /></svg>
+          Выйти
+        </button>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <span class="section-label">Кабинет</span>
+            <h1>Доступ</h1>
+          </div>
+          <div class="account-chip">
+            <img src="/static/assets/lipp-logo.png" alt="" />
+            <div>
+              <strong id="account-name">Аккаунт</strong>
+              <span id="account-email">email</span>
+            </div>
+          </div>
+        </header>
+
+        <section id="access" class="access-grid">
+          <div class="panel status-panel">
+            <div class="panel-heading">
+              <span>Подписка</span>
+              <strong id="access-state">не активна</strong>
+            </div>
+            <p id="access-days">Нет активной подписки</p>
+            <dl class="status-metrics">
+              <div>
+                <dt>До</dt>
+                <dd id="subscription-end">-</dd>
+              </div>
+              <div>
+                <dt>Бонусы</dt>
+                <dd id="bonus-days">0 дней</dd>
+              </div>
+            </dl>
+            <button id="refresh-key-button" class="secondary-button" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16" /><path d="M3 21v-5h5" /><path d="M3 12A9 9 0 0 1 18.5 5.8L21 8" /><path d="M21 3v5h-5" /></svg>
+              Обновить ключ
+            </button>
+          </div>
+
+          <div class="panel links-panel">
+            <div class="panel-heading">
+              <span>Ключ VLESS</span>
+              <button class="icon-button" id="copy-vless" type="button" aria-label="Скопировать VLESS">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h10v10H8z" /><path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+              </button>
+            </div>
+            <textarea id="vless-link" readonly placeholder="Ключ появится после оплаты"></textarea>
+
+            <div class="panel-heading compact">
+              <span>Ссылка подписки</span>
+              <button class="icon-button" id="copy-subscription" type="button" aria-label="Скопировать ссылку подписки">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h10v10H8z" /><path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+              </button>
+            </div>
+            <input id="subscription-link" readonly placeholder="Ссылка появится после оплаты" />
+          </div>
+
+          <div class="panel help-panel" id="support">
+            <div class="panel-heading">
+              <span>Поддержка</span>
+              <button id="check-connection-button" class="icon-button" type="button" aria-label="Проверить подключение">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17 19 7" /></svg>
+              </button>
+            </div>
+            <p>Скопируйте VLESS в Hiddify, Happ или другой клиент. Если оплата прошла, а ключ не появился, напишите в поддержку.</p>
+            <a id="support-link" class="support-link" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" /></svg>
+              Написать
+            </a>
+            <div id="connection-result" class="connection-result"></div>
+          </div>
+        </section>
+
+        <section id="telegram-sync" class="section-block">
+          <div class="sync-panel">
+            <div>
+              <span class="section-label">Telegram</span>
+              <h2>Синхронизация с ботом</h2>
+              <p id="telegram-sync-text">
+                Привяжите Telegram аккаунт, чтобы сайт показывал тот же ключ, подписку и историю оплат, что и бот.
+              </p>
+            </div>
+            <div class="sync-actions">
+              <button id="create-telegram-code" class="primary-button" type="button">
+                <span>Получить код</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </button>
+              <button id="refresh-telegram-status" class="secondary-button" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16" /><path d="M3 21v-5h5" /><path d="M3 12A9 9 0 0 1 18.5 5.8L21 8" /><path d="M21 3v5h-5" /></svg>
+                Обновить статус
+              </button>
+            </div>
+            <div id="telegram-code-box" class="telegram-code-box is-hidden">
+              <div>
+                <span>Команда для бота</span>
+                <code id="telegram-command">/start web_XXXXXX</code>
+              </div>
+              <button id="copy-telegram-command" class="icon-button" type="button" aria-label="Скопировать команду">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h10v10H8z" /><path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+              </button>
+              <a id="telegram-bot-link" class="secondary-button is-hidden" target="_blank" rel="noreferrer">Открыть бота</a>
+            </div>
+          </div>
+        </section>
+
+        <section id="tariffs" class="section-block">
+          <div class="section-head">
+            <div>
+              <span class="section-label">Продлить</span>
+              <h2>Тарифы</h2>
+            </div>
+            <button id="check-last-payment-button" class="secondary-button" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+              Проверить оплату
+            </button>
+          </div>
+          <div id="tariff-grid" class="tariff-grid"></div>
+        </section>
+
+        <section id="payments" class="section-block">
+          <div class="section-head">
+            <div>
+              <span class="section-label">Финансы</span>
+              <h2>История оплат</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Тариф</th>
+                  <th>Сумма</th>
+                  <th>Статус</th>
+                  <th>Дата</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="payments-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
